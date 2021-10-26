@@ -3,12 +3,13 @@ import '../styles.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({
-    Key key, @required this.icon, @required this.hint, this.inputType, this.inputAction,
+    Key key, @required this.icon, @required this.hint, this.inputType, this.inputAction, this.controller,
   }) : super(key: key);
   final IconData icon;
   final String hint;
   final TextInputType inputType;
   final TextInputAction inputAction;
+  final TextEditingController controller;
 
 
   @override
@@ -21,6 +22,7 @@ class TextInput extends StatelessWidget {
           borderRadius: BorderRadius.circular(17),
         ),
         child: TextField(
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 20),
             border: InputBorder.none,
@@ -38,6 +40,7 @@ class TextInput extends StatelessWidget {
           style: kBodyText,
           keyboardType: inputType,
           textInputAction: inputAction,
+
         ),
       ),
     );
