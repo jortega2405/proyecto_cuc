@@ -4,11 +4,12 @@ import '../styles.dart';
 
 class PassInput extends StatelessWidget {
   const PassInput({
-    Key key, @required this.icon, @required this.hint, this.inputAction,
+    Key key, @required this.icon, @required this.hint, this.inputAction, this.controller,
   }) : super(key: key);
   final IconData icon;
   final String hint;
   final TextInputAction inputAction;
+  final TextEditingController controller;
 
 
   @override
@@ -21,6 +22,7 @@ class PassInput extends StatelessWidget {
           borderRadius: BorderRadius.circular(17),
         ),
         child: TextField(
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 20),
             border: InputBorder.none,
