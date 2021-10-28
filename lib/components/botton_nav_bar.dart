@@ -37,7 +37,7 @@ class CustomBottomNavBar extends StatelessWidget {
             children: [
               IconButton(
                 icon: Icon(Icons.chat),
-                onPressed: () {  },
+                onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.map),

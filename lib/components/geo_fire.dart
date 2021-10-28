@@ -10,6 +10,13 @@ class GeofireProvider {
     _geo = Geoflutterfire();
   }
 
+  Stream<List<DocumentSnapshot>> getNearbyUsers(double lat, double lng, double radius){
+    GeoFirePoint center = _geo.point(latitude: lat, longitude: lng);
+    return _geo.collection(collectionRef: _ref.where('status', isEqualTo: 'users_available')).within(
+      center: center, radius: radius, field: 'position'
+    );
+  }
+
   Stream<DocumentSnapshot> getLocationByIdState(){
     return _ref.doc().snapshots(includeMetadataChanges: true);
   }

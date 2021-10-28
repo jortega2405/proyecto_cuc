@@ -34,6 +34,7 @@ MapController _con = new MapController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _drawer(),
       key: _con.key,
       body: Stack(
         children: [
@@ -44,7 +45,16 @@ MapController _con = new MapController();
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ButtonDrawer(),
+                    //ButtonDrawer(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,  
+                      ),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    ),
                     CenterPosition(),
                   ],
                 ),
@@ -73,8 +83,59 @@ MapController _con = new MapController();
                 ),
               ],
             ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: _iconMyLocation(),
+
           )
         ],  
+      ),
+    );
+  }
+
+  Widget _iconMyLocation(){
+    return Image.asset(
+      'assets/images/grupo-de-chat.png',
+      width: 65,
+      height: 65,
+    );
+  }
+
+  Widget _drawer(){
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            child: Column(
+              children: [
+                Container(
+                  child: Text(
+                    'Nombre de usuario',  
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
+                    ),
+                    maxLines: 1,
+                  )
+                ),
+                Container(
+                  child: Text(
+                    'Email',  
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold
+                    ),
+                    maxLines: 1,
+                  )
+                ),
+              ]
+            ),
+          )
+        ],
       ),
     );
   }

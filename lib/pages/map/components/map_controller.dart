@@ -36,8 +36,12 @@ class MapController {
     this.context = context;
     this.refresh = refresh;
     _geofireProvider = new GeofireProvider();
-    marker = await createMarkerImageFromAssets('assets/images/walking.png');
+    marker = await createMarkerImageFromAssets('assets/images/grupo-de-chat.png');
     checkGPS();
+  }
+
+  void openDrawer(){
+    key.currentState.openDrawer();
   }
 
   void dispose(){
@@ -90,6 +94,7 @@ class MapController {
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       centerPosition();
+      getNearbyUsers();
       saveLocation();
       addMarker(
         'person',
@@ -121,6 +126,40 @@ class MapController {
     } catch (error) { 
       print('Error en la localizacion: $error');
     }
+  }
+
+  void getNearbyUsers(){
+    Stream<List<DocumentSnapshot>> stream = _geofireProvider.getNearbyUsers(_position.latitude, _position.longitude, 20);
+    
+    stream.listen((List<DocumentSnapshot> documentList) { 
+
+      for (MarkerId m in markers.keys) {
+        bool remove = true;
+
+        for(DocumentSnapshot d in documentList){
+          if (m.value == d.id) {
+            remove = false;
+          }
+        }
+        if (remove) {
+          markers.remove(m);
+          refresh();
+        }
+
+        for(DocumentSnapshot d in documentList){
+          GeoPoint point = d.data()['position']['geopoint'];
+          addMarker(
+            'person',
+            point.latitude,
+            point.longitude,
+            "Usuario X",
+            '',
+            marker
+          );
+        }
+        
+      }
+    });
   }
 
   void centerPosition() {
